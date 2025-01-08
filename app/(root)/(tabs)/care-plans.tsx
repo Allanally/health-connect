@@ -1,14 +1,15 @@
 /* eslint-disable prettier/prettier */
-import { View, Text, ScrollView, TextInput, TouchableOpacity, Platform } from "react-native";
+import { View, Text, ScrollView, TextInput, TouchableOpacity} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from "react";
+import { router } from "expo-router";
 
 const CarePlans = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = 2;
-  const [date, setDate] = useState(new Date());
-  const [showDatePicker, setShowDatePicker] = useState(false);
+  //const [date, setDate] = useState(new Date());
+ // const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDays, setSelectedDays] = useState('30');
   const [showDaysDropdown, setShowDaysDropdown] = useState(false);
   const [selectedContributors, setSelectedContributors] = useState<string[]>([]);
@@ -24,12 +25,12 @@ const CarePlans = () => {
     { id: '5', name: 'Nurse Rachel Green' },
   ];
 
-  const onDateChange = (event: Event, selectedDate?: Date) => {
+{/*  const onDateChange = (event: Event, selectedDate?: Date) => {
     setShowDatePicker(Platform.OS === 'ios');
     if (selectedDate) {
       setDate(selectedDate);
     }
-  };
+  };*/}
 
   const renderContent = () => {
     switch (currentStep) {
@@ -234,7 +235,7 @@ const CarePlans = () => {
          <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
       {/* Header with Back Button and Progress Bar */}
       <View className="p-4">
-        <TouchableOpacity className="flex-row items-center rounded-xl w-[30%] p-2 border border-neutral-200">
+        <TouchableOpacity className="flex-row items-center justify-center rounded-xl w-[30%] p-2 border border-neutral-200" onPress={() => router.back()}>
           <Text className="ml-2 text-lg font-JakartaMedium">Back</Text>
         </TouchableOpacity>
         
@@ -258,32 +259,54 @@ const CarePlans = () => {
         {renderContent()}
      
 
-      {/* Navigation Buttons */}
-      <View className="p-4">
-        <View className="flex-row justify-between">
-          <TouchableOpacity 
-            className="px-6 py-3 bg-gray-100 rounded-lg"
-            onPress={() => setCurrentStep(Math.max(1, currentStep - 1))}
-          >
-            <Text className="font-JakartaMedium">Previous</Text>
-          </TouchableOpacity>
-          <TouchableOpacity 
-            className="px-6 py-3 bg-primary-500 rounded-lg"
-            onPress={() => {
-              if (currentStep === totalSteps) {
-                // Handle form submission
-                console.log('Form submitted');
-              } else {
-                setCurrentStep(Math.min(totalSteps, currentStep + 1));
-              }
-            }}
-          >
-            <Text className="font-JakartaMedium text-white">
-              {currentStep === totalSteps ? 'Submit' : 'Next'}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View> </ScrollView>
+        <View className="p-4">
+  <View className="flex-row justify-between">
+    {currentStep > 1 && (
+      <TouchableOpacity 
+        className="px-6 py-3 bg-gray-100 rounded-lg"
+        onPress={() => setCurrentStep(Math.max(1, currentStep - 1))}
+      >
+        <Text className="font-JakartaMedium">Previous</Text>
+      </TouchableOpacity>
+    )}
+    <TouchableOpacity 
+      className="px-6 py-3 bg-primary-500 rounded-lg"
+      onPress={() => {
+        if (currentStep === totalSteps) {
+          // Handle form submission
+          console.log('Form submitted');
+        } else {
+          setCurrentStep(Math.min(totalSteps, currentStep + 1));
+        }
+      }}
+    >
+      <Text className="font-JakartaMedium text-white">
+        {currentStep === totalSteps ? 'Submit' : 'Next'}
+      </Text>
+    </TouchableOpacity>
+  </View>
+</View>
+
+     </ScrollView>
+       {/* Bottom Navigation */}
+       <View className="flex-row justify-between p-4 bg-white border-t border-gray-200">
+        <TouchableOpacity 
+          className="px-6 border border-indigo-600 rounded-l-xl py-3  mr-1"
+          onPress={() => router.push('/(root)/(tabs)/daily-records')}
+        >
+          <View className="flex-row items-center justify-center">
+            <Text className=" font-medium ml-2">DR</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          className="px-6 border border-indigo-600 rounded-r-xl py-3  ml-1"
+          onPress={() => router.push('/(root)/(tabs)/care-plans')}
+        >
+          <View className="flex-row items-center justify-center">
+            <Text className=" font-medium ml-2">CP</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };

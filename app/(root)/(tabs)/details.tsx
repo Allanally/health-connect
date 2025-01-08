@@ -1,13 +1,11 @@
 /* eslint-disable prettier/prettier */
+import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { router, useLocalSearchParams } from 'expo-router';
+import { router } from 'expo-router';
 
 export default function ServiceUserProfile() {
-  const { id } = useLocalSearchParams();
-  
-  // Mock data - replace with actual API call
   const userData = {
     name: 'Jane Doe',
     age: 20,
@@ -23,77 +21,137 @@ export default function ServiceUserProfile() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
-        <ScrollView className="flex-1 px-4" contentContainerStyle={{ paddingBottom: 20}}
-        showsVerticalScrollIndicator={false}
-        >
+    <SafeAreaView className="flex-1 bg-gray-50">
       {/* Header */}
-      <View className="p-4 -ml-6">
-        <View className="flex-row items-center">
-          <TouchableOpacity 
-            onPress={() => router.back()}
-            className="p-2"
-          >
-            <Ionicons name="arrow-back" size={24} color="#000" />
+      <View className="bg-white px-4 py-3 border-b border-gray-200">
+        <View className="flex-row items-center justify-between">
+          <View className="flex-row items-center">
+            <TouchableOpacity 
+              onPress={() => router.push('/(root)/home')}
+              className="p-2 -ml-2"
+            >
+              <Ionicons name="arrow-back" size={24} color="#4F46E5" />
+            </TouchableOpacity>
+            <Text className="text-xl font-bold ml-2">Profile Details</Text>
+          </View>
+          <TouchableOpacity className="p-2">
+            <Ionicons name="create-outline" size={24} color="#4F46E5" />
           </TouchableOpacity>
-          <Text className="text-xl font-JakartaBold ml-2">Profile</Text>
         </View>
       </View>
 
-    
+      <ScrollView 
+        className="flex-1" 
+        contentContainerStyle={{ paddingBottom: 20 }}
+        showsVerticalScrollIndicator={false}
+      >
         {/* Profile Header */}
-        <View className="flex-row -mt-3 items-center border-b border-gray-700 py-2">
-          <View className="w-16 h-16 rounded-full bg-gray-200 items-center justify-center">
-            <Ionicons name="person" size={32} color="#666" />
-          </View>
-          <View className="ml-4 ">
-            <Text className="text-xl font-JakartaBold">{userData.name}</Text>
-            <View className="flex-row mt-1">
-              <View className="mr-6">
-                <Text className="text-gray-600 font-JakartaMedium">Age</Text>
-                <Text className="font-JakartaBold">{userData.age}</Text>
-              </View>
-              <View>
-                <Text className="text-gray-600 font-JakartaMedium">Gender</Text>
-                <Text className="font-JakartaBold">{userData.gender}</Text>
+        <View className="bg-white px-4 py-6 mb-3">
+          <View className="flex-row items-center">
+            <View className="w-20 h-20 rounded-full bg-indigo-100 items-center justify-center">
+              <Text className="text-2xl font-bold text-indigo-600">
+                {userData.name.split(' ').map(n => n[0]).join('')}
+              </Text>
+            </View>
+            <View className="ml-4 flex-1">
+              <Text className="text-2xl font-bold text-gray-900">{userData.name}</Text>
+              <View className="flex-row mt-2">
+                <View className="bg-indigo-100 px-3 py-1 rounded-full mr-2">
+                  <Text className="text-indigo-600 font-medium">{userData.age} years</Text>
+                </View>
+                <View className="bg-indigo-100 px-3 py-1 rounded-full">
+                  <Text className="text-indigo-600 font-medium">{userData.gender}</Text>
+                </View>
               </View>
             </View>
           </View>
         </View>
 
-        {/* Measurements */}
-        <View className="flex-row mt-2 justify-between bg-primary-50 p-4 rounded-xl">
-          <View>
-            <Text className="text-gray-600 font-JakartaMedium">Height</Text>
-            <Text className="font-JakartaBold mt-1">{userData.height}</Text>
+        {/* Vitals Card */}
+        <View className="mx-4 bg-white rounded-xl shadow-sm overflow-hidden mb-3">
+          <View className="px-4 py-3 bg-indigo-50">
+            <Text className="font-bold text-indigo-900">Vital Statistics</Text>
           </View>
-          <View>
-            <Text className="text-gray-600 font-JakartaMedium">Weight</Text>
-            <Text className="font-JakartaBold mt-1">{userData.weight}</Text>
-          </View>
-          <View>
-            <Text className="text-gray-600 font-JakartaMedium">Blood group</Text>
-            <Text className="font-JakartaBold mt-1">{userData.bloodGroup}</Text>
+          <View className="p-4 flex-row justify-between">
+            <VitalItem icon="resize" label="Height" value={userData.height} />
+            <VitalItem icon="scale-outline" label="Weight" value={userData.weight} />
+            <VitalItem icon="water" label="Blood" value={userData.bloodGroup} />
           </View>
         </View>
 
-        {/* Medical Information */}
-        <View className="mt-2 space-y-6 flex flex-col">
-          <InfoSection title="Summary" content={userData.summary} />
-          <InfoSection title="Mental health diagnosis" content={userData.mentalHealth} />
-          <InfoSection title="Medical conditions" content={userData.medicalConditions} />
-          <InfoSection title="Current medications" content={userData.medications} />
-          <InfoSection title="Allergies" content={userData.allergies} />
+        {/* Medical Information Cards */}
+        <View className="px-4 space-y-3">
+          <InfoCard
+            title="Summary"
+            content={userData.summary}
+            icon="document-text-outline"
+          />
+          <InfoCard
+            title="Mental Health Diagnosis"
+            content={userData.mentalHealth}
+            icon="pulse-outline"
+          />
+          <InfoCard
+            title="Medical Conditions"
+            content={userData.medicalConditions}
+            icon="medical-outline"
+          />
+          <InfoCard
+            title="Current Medications"
+            content={userData.medications}
+            icon="medical"
+          />
+          <InfoCard
+            title="Allergies"
+            content={userData.allergies}
+            icon="alert-circle-outline"
+          />
         </View>
-
       </ScrollView>
+
+      {/* Bottom Navigation */}
+      <View className="flex-row justify-between p-4 bg-white border-t border-gray-200">
+        <TouchableOpacity 
+          className="px-6 border border-indigo-600 rounded-l-xl py-3  mr-1"
+          onPress={() => router.push('/(root)/(tabs)/daily-records')}
+        >
+          <View className="flex-row items-center justify-center">
+            <Text className=" font-medium ml-2">DR</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          className="px-6 border border-indigo-600 rounded-r-xl py-3  ml-1"
+          onPress={() => router.push('/(root)/(tabs)/care-plans')}
+        >
+          <View className="flex-row items-center justify-center">
+            <Text className=" font-medium ml-2">CP</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
 
-const InfoSection = ({ title, content }: { title: string; content: string }) => (
-  <View>
-    <Text className="font-JakartaBold text-lg mb-2">{title}</Text>
-    <Text className="text-gray-600 font-JakartaRegular">{content}</Text>
+const VitalItem = ({ icon, label, value }: { icon: string; label: string; value: string }) => (
+  <View className="items-center">
+    <View className="w-10 h-10 bg-indigo-100 rounded-full items-center justify-center mb-2">
+      <Ionicons name={icon} size={20} color="#4F46E5" />
+    </View>
+    <Text className="text-gray-600 text-sm mb-1">{label}</Text>
+    <Text className="font-bold text-gray-900">{value}</Text>
   </View>
-); 
+);
+
+const InfoCard = ({ title, content, icon }: { title: string; content: string; icon: string }) => (
+  <View className="bg-white rounded-xl shadow-sm overflow-hidden">
+    <View className="p-4">
+      <View className="flex-row items-center mb-3">
+        <View className="w-8 h-8 bg-indigo-100 rounded-full items-center justify-center">
+          <Ionicons name={icon} size={18} color="#4F46E5" />
+        </View>
+        <Text className="font-bold text-gray-900 ml-3">{title}</Text>
+      </View>
+      <Text className="text-gray-600">{content}</Text>
+    </View>
+  </View>
+);

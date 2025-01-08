@@ -13,7 +13,6 @@ const OnBoarding = () => {
 
   return (
     <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-      {/* Header */}
       <View className="flex justify-center items-center">
         <Image className="w-24 h-16" source={images.hc} />
       </View>
@@ -23,24 +22,19 @@ const OnBoarding = () => {
       <Text className="text-md font-JakartaLight text-center">
         Please select your profile to continue
       </Text>
-      {/* Content */}
       <View className="flex flex-col items-center gap-4 mt-4">
-        {/* Service Provider (Clickable) */}
         <TouchableOpacity
           className={`flex flex-col rounded-xl px-16 py-8 items-center justify-center border ${
             selected ? "border-blue-500" : "border-neutral-300"
           }`}
-          onPress={() => setSelected(true)}
-        >
+          onPress={() => setSelected(true)} >
           <Image className="w-12 h-12" source={images.demo} />
           <Text className="text-md font-JakartaLight mt-4 text-purple-950">
             Service Provider
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          className="flex flex-col rounded-xl px-20 py-8 items-center justify-center border border-neutral-300 opacity-50"
-          disabled
-        >
+          className="flex flex-col rounded-xl px-20 py-8 items-center justify-center border border-neutral-300 opacity-50" disabled>
           <Image className="w-12 h-12" source={images.demo} />
           <Text className="text-md font-JakartaLight mt-4 text-purple-950">
             Service User
