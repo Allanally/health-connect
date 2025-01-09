@@ -1,11 +1,13 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import CarePlanShow from '@/components/CarePlanShow';
 
 const CarePlansScreen = () => {
+  const [isCarePlanVisible, setIsCarePlanVisible] = useState(false);
   const draftedPlans = [
     {
       id: 1,
@@ -50,7 +52,7 @@ const CarePlansScreen = () => {
             Care plans
           </Text>
           <View className="flex-row items-center space-x-2">
-            <TouchableOpacity className="p-2">
+            <TouchableOpacity className="p-2" onPress={() => router.push('/(root)/care-plan-history')}>
               <Ionicons name="time-outline" size={24} color="#4F46E5" />
             </TouchableOpacity>
             <TouchableOpacity className="p-2">
@@ -65,7 +67,7 @@ const CarePlansScreen = () => {
         </View>
       </View>
 
-      <ScrollView className="flex-1 px-4 py-4">
+      <ScrollView className="flex-1 px-4 py-4" contentContainerStyle={{ paddingBottom: 25}} showsVerticalScrollIndicator={false}>
         {/* Drafted Section */}
         <View className="mb-6">
           <Text className="text-lg font-medium text-gray-700 mb-3">
@@ -82,6 +84,26 @@ const CarePlansScreen = () => {
           {submittedPlans.map(plan => renderCarePlanCard(plan, 'submitted'))}
         </View>
       </ScrollView>
+      <CarePlanShow visible={isCarePlanVisible} onClose={() => setIsCarePlanVisible(false)} />
+      {/* Bottom Navigation */}
+      <View className="flex-row justify-between p-4 bg-white border-t border-gray-200">
+        <TouchableOpacity 
+          className="px-6 border border-indigo-600 rounded-l-xl py-3  mr-1"
+          onPress={() => router.push('/(root)/(tabs)/daily-records')}
+        >
+          <View className="flex-row items-center justify-center">
+            <Text className=" font-medium ml-2">DR</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          className="px-6 border border-indigo-600 rounded-r-xl py-3  ml-1"
+          onPress={() => setIsCarePlanVisible(true)}
+        >
+          <View className="flex-row items-center justify-center">
+            <Text className=" font-medium ml-2">CP</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
