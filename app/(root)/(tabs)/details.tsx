@@ -1,9 +1,10 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import CarePlanShow from '@/components/CarePlanShow';
 
 export default function ServiceUserProfile() {
   const userData = {
@@ -19,6 +20,8 @@ export default function ServiceUserProfile() {
     medications: 'All prescribed medications should go here',
     allergies: 'All allergies should go here.',
   };
+  const [isCarePlanVisible, setIsCarePlanVisible] = useState(false);
+  
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
@@ -108,7 +111,7 @@ export default function ServiceUserProfile() {
           />
         </View>
       </ScrollView>
-
+      <CarePlanShow visible={isCarePlanVisible} onClose={() => setIsCarePlanVisible(false)} />
       {/* Bottom Navigation */}
       <View className="flex-row justify-between p-4 bg-white border-t border-gray-200">
         <TouchableOpacity 
@@ -121,13 +124,14 @@ export default function ServiceUserProfile() {
         </TouchableOpacity>
         <TouchableOpacity 
           className="px-6 border border-indigo-600 rounded-r-xl py-3  ml-1"
-          onPress={() => router.push('/(root)/(tabs)/care-plans')}
+          onPress={() => setIsCarePlanVisible(true)}
         >
           <View className="flex-row items-center justify-center">
             <Text className=" font-medium ml-2">CP</Text>
           </View>
         </TouchableOpacity>
       </View>
+      
     </SafeAreaView>
   );
 }

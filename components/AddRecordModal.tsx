@@ -22,7 +22,14 @@ const CARE_PLANS = [
         name: "COVID",
         time: "09:15",
         date: "26/11/2024"
-    }
+    },
+    {
+      id: 2,
+      name: "Development Phase",
+      time: "02:45",
+      date: "2/1/2025"
+  },
+
 ]
 
 const AddRecordModal: React.FC<AddRecordModalProps> = ({
@@ -153,7 +160,12 @@ const AddRecordModal: React.FC<AddRecordModalProps> = ({
                 setShowCarePlanSelector(false);
               }}
             >
-              <Text className="text-gray-900">{c.name}</Text>
+              <View className='flex-row gap-x-1'>
+                <Text className='font-JakartaLight'>{c.time}</Text>
+                <Text className='font-JakartaLight'>{c.date}</Text>
+                 <Text className="font-JakartaLight">{c.name}</Text>
+              </View>
+             
             </TouchableOpacity>
           ))}
         </ScrollView>

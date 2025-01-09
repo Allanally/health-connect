@@ -5,10 +5,14 @@ import lock from '../assets/icons/lock.png'
 import email from '../assets/icons/email.png'
 import demo from '../assets/images/demo.jpg'
 import logo from '../assets/images/logo.png'
+import personalcare from '../assets/images/personal-care.jpg'
+import covid from '../assets/images/covid.jpg'
 export const images = {
     hc,
     msc,
     demo,
+    personalcare,
+    covid,
     logo
 }
 

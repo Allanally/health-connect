@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import AddRecordModal from '@/components/AddRecordModal';
 import { router } from 'expo-router';
+import CarePlanShow from '@/components/CarePlanShow';
 
 interface Record {
   id: string;
@@ -196,6 +197,8 @@ const FilterModal: React.FC<FilterModalProps> = ({
       option.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [options, searchQuery]);
+  const [isCarePlanVisible, setIsCarePlanVisible] = useState(false);
+
 
   return (
     <Modal
@@ -266,6 +269,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
                 <Text className="text-gray-500 mt-2">No results found</Text>
               </View>
             )}
+
 
             {/* Action Buttons */}
             <View className="p-4 flex-row justify-between border-t border-gray-100">
@@ -427,6 +431,7 @@ const DailyRecords: React.FC = () => {
   const [showAddRecord, setShowAddRecord] = useState(false);
   const [selectedRange, setSelectedRange] = useState('7');
   const [showRangeSelector, setShowRangeSelector] = useState(false);
+  
 
 
   const authors = [...new Set(sampleData.map(record => record.createdBy.name))];
@@ -469,6 +474,7 @@ const DailyRecords: React.FC = () => {
     const descriptionMatch = record.description?.toLowerCase().includes(searchQuery.toLowerCase()); 
     return authorMatch && typeMatch && (searchQuery === '' || descriptionMatch);
   });
+  const [isCarePlanVisible, setIsCarePlanVisible] = useState(false);
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
@@ -650,6 +656,7 @@ const DailyRecords: React.FC = () => {
           <Ionicons name="sparkles" size={24} color="white" />
         </TouchableOpacity>
       </View>
+      <CarePlanShow visible={isCarePlanVisible} onClose={() => setIsCarePlanVisible(false)} />
        {/* Bottom Navigation */}
        <View className="flex-row justify-between p-4 bg-white border-t border-gray-200">
         <TouchableOpacity 
@@ -662,7 +669,7 @@ const DailyRecords: React.FC = () => {
         </TouchableOpacity>
         <TouchableOpacity 
           className="px-6 border border-indigo-600 rounded-r-xl py-3  ml-1"
-          onPress={() => router.push('/(root)/(tabs)/care-plans')}
+          onPress={() => setIsCarePlanVisible(true)}
         >
           <View className="flex-row items-center justify-center">
             <Text className=" font-medium ml-2">CP</Text>
