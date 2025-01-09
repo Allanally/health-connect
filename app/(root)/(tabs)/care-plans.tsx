@@ -5,9 +5,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import CarePlanShow from '@/components/CarePlanShow';
+import ArchiveModalManager from '@/components/ArchiveModal';
+import CreateCarePlanModal from '@/components/CreateCarePlanModal';
 
 const CarePlansScreen = () => {
   const [isCarePlanVisible, setIsCarePlanVisible] = useState(false);
+  const [showListModal, setListModalVisible] = useState(false)
+  const [isCreateModalVisible, setCreateModalVisible] = useState(false);
   const draftedPlans = [
     {
       id: 1,
@@ -20,6 +24,16 @@ const CarePlansScreen = () => {
     {
       id: 2,
       title: 'COVID',
+      image: require('../../../assets/images/covid.jpg'),
+    },
+    {
+      id: 3,
+      title: 'Elimination',
+      image: require('../../../assets/images/covid.jpg'),
+    },
+    {
+      id: 4,
+      title: '  Manager',
       image: require('../../../assets/images/covid.jpg'),
     },
   ];
@@ -37,7 +51,7 @@ const CarePlansScreen = () => {
         className="w-full h-40"
       />
       <View className="p-3">
-        <Text className="text-lg font-semibold text-gray-800">
+        <Text className="text-lg font-JakartaSemiBold text-gray-800">
           {plan.title}
         </Text>
       </View>
@@ -48,29 +62,37 @@ const CarePlansScreen = () => {
     <SafeAreaView className="flex-1 bg-gray-100">
       <View className="bg-white border-b border-gray-200">
         <View className="flex-row justify-between items-center px-4 py-3">
-          <Text className="text-2xl font-semibold text-gray-800">
+          <Text className="text-2xl font-JakartaSemiBold text-gray-800">
             Care plans
           </Text>
           <View className="flex-row items-center space-x-2">
             <TouchableOpacity className="p-2" onPress={() => router.push('/(root)/care-plan-history')}>
               <Ionicons name="time-outline" size={24} color="#4F46E5" />
             </TouchableOpacity>
-            <TouchableOpacity className="p-2">
+            <TouchableOpacity className="p-2" onPress={() => setListModalVisible(true)}>
               <Ionicons name="archive-outline" size={24} color="#4F46E5" />
             </TouchableOpacity>
-            <TouchableOpacity className="bg-indigo-600 px-4 py-2 rounded-md">
-              <Text className="text-white font-medium">
+            <TouchableOpacity className="bg-indigo-600 px-4 py-2 rounded-md" onPress={() => setCreateModalVisible(true)}>
+              <Text className="text-white font-JakartaMedium">
                 Create
               </Text>
             </TouchableOpacity>
           </View>
         </View>
       </View>
-
+      <ArchiveModalManager 
+       isListModalVisible={showListModal}
+       onClose={() => setListModalVisible(false)}
+       submittedPlans={submittedPlans}
+      />
+      <CreateCarePlanModal
+      visible={isCreateModalVisible}
+      onClose={() => setCreateModalVisible(false)}
+      />
       <ScrollView className="flex-1 px-4 py-4" contentContainerStyle={{ paddingBottom: 25}} showsVerticalScrollIndicator={false}>
         {/* Drafted Section */}
         <View className="mb-6">
-          <Text className="text-lg font-medium text-gray-700 mb-3">
+          <Text className="text-lg font-JakartaMedium text-gray-700 mb-3">
             Drafted
           </Text>
           {draftedPlans.map(plan => renderCarePlanCard(plan, 'drafted'))}
@@ -78,7 +100,7 @@ const CarePlansScreen = () => {
 
         {/* Submitted Section */}
         <View>
-          <Text className="text-lg font-medium text-gray-700 mb-3">
+          <Text className="text-lg font-JakartaMedium text-gray-700 mb-3">
             Submitted
           </Text>
           {submittedPlans.map(plan => renderCarePlanCard(plan, 'submitted'))}
@@ -92,7 +114,7 @@ const CarePlansScreen = () => {
           onPress={() => router.push('/(root)/(tabs)/daily-records')}
         >
           <View className="flex-row items-center justify-center">
-            <Text className=" font-medium ml-2">DR</Text>
+            <Text className=" font-JakartaMedium ml-2">DR</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity 
@@ -100,7 +122,7 @@ const CarePlansScreen = () => {
           onPress={() => setIsCarePlanVisible(true)}
         >
           <View className="flex-row items-center justify-center">
-            <Text className=" font-medium ml-2">CP</Text>
+            <Text className=" font-JakartaMedium ml-2">CP</Text>
           </View>
         </TouchableOpacity>
       </View>

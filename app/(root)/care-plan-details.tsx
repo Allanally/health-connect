@@ -3,21 +3,19 @@ import { View, Text, ScrollView, TextInput, TouchableOpacity} from "react-native
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from "react";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import React from "react";
 
 const CarePlans = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = 2;
-  //const [date, setDate] = useState(new Date());
- // const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDays, setSelectedDays] = useState('30');
   const [showDaysDropdown, setShowDaysDropdown] = useState(false);
   const [selectedContributors, setSelectedContributors] = useState<string[]>([]);
   const [showContributorsDropdown, setShowContributorsDropdown] = useState(false);
+  const { carePlanTitle } = useLocalSearchParams();
 
   const daysOptions = ['7', '14', '30', '60', '90'];
-
   const contributorOptions = [
     { id: '1', name: 'Dr. Sarah Johnson' },
     { id: '2', name: 'Nurse Mike Brown' },
@@ -26,161 +24,162 @@ const CarePlans = () => {
     { id: '5', name: 'Nurse Rachel Green' },
   ];
 
-{/*  const onDateChange = (event: Event, selectedDate?: Date) => {
-    setShowDatePicker(Platform.OS === 'ios');
-    if (selectedDate) {
-      setDate(selectedDate);
-    }
-  };*/}
-
   const renderContent = () => {
     switch (currentStep) {
       case 1:
         return (
-          <View className="w-[96%] ml-2">
-            {/* Section 1: Where am I now? */}
-            <View className="mb-6 ">
-              <Text className="text-xl font-JakartaBold mb-3">Where am I now?</Text>
+          <View className="px-4 py-2">
+            {/* Header Card */}
+            <View className="bg-primary-50 p-4 rounded-2xl mb-6">
+              <Text className="text-primary-600 text-sm font-JakartaMedium mb-1">Current Care Plan</Text>
+              <Text className="text-2xl font-JakartaBold text-gray-900">{carePlanTitle}</Text>
+            </View>
+
+            {/* Where am I now? section */}
+            <View className="mb-8">
+              <Text className="text-xl font-JakartaBold mb-3 text-gray-900">Where am I now?</Text>
               <TextInput
-                className="bg-gray-50 p-4 rounded-xl border border-gray-200"
+                className="bg-white p-4 rounded-xl border border-gray-200 min-h-[120px] shadow-sm"
                 multiline
-                placeholder="Type here..."
+                placeholder="Describe your current situation..."
                 textAlignVertical="top"
               />
             </View>
 
-            {/* Section 2: Service User Information */}
-            <View className="mb-6">
-              <Text className="text-xl font-JakartaBold mb-3">Service user information</Text>
-              <View className="bg-gray-50 p-4 rounded-xl border border-gray-200">
-                <InfoRow label="Name" value="Jane Doe" />
-                <InfoRow label="Age" value="25" />
-                <InfoRow label="Gender" value="Male" />
-                <InfoRow label="NHS Number" value="666666" />
-                
-                <Text className="mt-4 mb-2 font-JakartaMedium">
-                  Has the care plan been discussed with the service user?
-                </Text>
-                <View className="flex-row gap-4">
-                  <TouchableOpacity className="px-6 py-2 border border-gray-300 rounded-lg">
-                    <Text>Yes</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity className="px-6 py-2 border border-gray-300 rounded-lg">
-                    <Text>No</Text>
-                  </TouchableOpacity>
+            {/* Service User Information Card */}
+            <View className="bg-white rounded-2xl border border-gray-100 shadow-sm mb-6">
+              <View className="p-4 border-b border-gray-100">
+                <Text className="text-xl font-JakartaBold text-gray-900">Service User Information</Text>
+              </View>
+              
+              <View className="p-4 space-y-4">
+                {/* User Details Grid */}
+                <View className="bg-gray-50 p-4 rounded-xl grid-cols-2 gap-4">
+                  <InfoRow label="Name" value="Jane Doe" />
+                  <InfoRow label="Age" value="25" />
+                  <InfoRow label="Gender" value="Male" />
+                  <InfoRow label="NHS Number" value="666666" />
                 </View>
 
-                <View className="mt-4 mb-2">
-                  <Text className="font-JakartaMedium mb-2">When do you want to review this?</Text>
+                {/* Care Plan Discussion */}
+                <View className="mt-6">
+                  <Text className="font-JakartaBold text-gray-900 mb-3">
+                    Has the care plan been discussed?
+                  </Text>
+                  <View className="flex-row gap-3">
+                    <TouchableOpacity className="flex-1 py-3 bg-primary-50 rounded-xl items-center">
+                      <Text className="font-JakartaMedium text-primary-600">Yes</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity className="flex-1 py-3 border border-gray-200 rounded-xl items-center">
+                      <Text className="font-JakartaMedium text-gray-600">No</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+
+                {/* Review Period Selection */}
+                <View className="mt-6">
+                  <Text className="font-JakartaBold text-gray-900 mb-3">Review Period</Text>
                   <TouchableOpacity 
                     onPress={() => setShowDaysDropdown(!showDaysDropdown)}
-                    className="border border-gray-300 rounded-lg px-4 py-3"
+                    className="bg-white border border-gray-200 rounded-xl p-4"
                   >
                     <View className="flex-row justify-between items-center">
-                      <Text>{selectedDays} days</Text>
-                      <Ionicons 
-                        name={showDaysDropdown ? "chevron-up" : "chevron-down"} 
-                        size={20} 
-                        color="#666" 
-                        className="mr-4"
-                      />
+                      <Text className="font-JakartaMedium">{selectedDays} days</Text>
+                      <Ionicons name={showDaysDropdown ? "chevron-up" : "chevron-down"} size={20} color="#666" />
                     </View>
                   </TouchableOpacity>
                   
                   {showDaysDropdown && (
-                    <View className="border border-gray-300 rounded-lg mt-1 bg-white">
+                    <View className="bg-white border border-gray-200 rounded-xl mt-2 overflow-hidden">
                       {daysOptions.map((days) => (
                         <TouchableOpacity
                           key={days}
-                          className="px-4 py-3 border-b border-gray-200"
+                          className="p-4 border-b border-gray-100"
                           onPress={() => {
                             setSelectedDays(days);
                             setShowDaysDropdown(false);
                           }}
                         >
-                          <Text className={`${selectedDays === days ? 'text-primary-500 font-JakartaBold' : ''}`}>
+                          <Text className={`font-JakartaMedium ${selectedDays === days ? 'text-primary-600' : 'text-gray-600'}`}>
                             {days} days
                           </Text>
                         </TouchableOpacity>
                       ))}
                     </View>
                   )}
-                  <View className="flex mt-2 flex-row justify-start items-center">
-                    <Text className=" font-JakartaMedium">Provider:</Text> 
-                    <Text className="font-JakartaLight ml-1">James Smith</Text>
-                  </View>
-                  <View>
-                    <Text className="mt-4 mb-2 font-JakartaMedium">Care Plan Contributors</Text>
-                    <TouchableOpacity 
-                      onPress={() => setShowContributorsDropdown(!showContributorsDropdown)}
-                      className="border border-gray-300 rounded-lg px-4 py-3"
-                    >
-                      <View className="flex-row justify-between items-center">
-                        <Text className="text-gray-600">
-                          {selectedContributors.length > 0 
-                            ? `${selectedContributors.length} selected`
-                            : 'Select contributors'}
-                        </Text>
-                        <Ionicons 
-                          name={showContributorsDropdown ? "chevron-up" : "chevron-down"} 
-                          size={20} 
-                          color="#666" 
-                          className="mr-4"
-                        />
-                      </View>
-                    </TouchableOpacity>
-                    
-                    {showContributorsDropdown && (
-                      <View className="border border-gray-300 rounded-lg mt-1 bg-white">
-                        {contributorOptions.map((contributor) => (
-                          <TouchableOpacity
-                            key={contributor.id}
-                            className="px-4 py-3 border-b border-gray-200 flex-row justify-between items-center"
-                            onPress={() => {
-                              setSelectedContributors(prev => {
-                                if (prev.includes(contributor.id)) {
-                                  return prev.filter(id => id !== contributor.id);
-                                }
-                                return [...prev, contributor.id];
-                              });
-                            }}
-                          >
-                            <Text className={`${
-                              selectedContributors.includes(contributor.id) 
-                                ? 'text-primary-500 font-JakartaBold' 
-                                : 'font-JakartaRegular'
-                            }`}>
-                              {contributor.name}
-                            </Text>
-                            {selectedContributors.includes(contributor.id) && (
-                              <Ionicons name="checkmark" size={20} color="#0286FF" />
-                            )}
-                          </TouchableOpacity>
-                        ))}
-                      </View>
-                    )}
+                </View>
 
-                    {selectedContributors.length > 0 && (
-                      <View className="mt-2 flex-wrap flex-row gap-2">
-                        {selectedContributors.map(id => {
-                          const contributor = contributorOptions.find(c => c.id === id);
-                          return (
-                            <View key={id} className="bg-primary-100 px-3 py-1 rounded-full flex-row items-center">
-                              <Text className="text-primary-500 font-JakartaMedium text-sm">
-                                {contributor?.name}
-                              </Text>
-                              <TouchableOpacity 
-                                onPress={() => setSelectedContributors(prev => prev.filter(cId => cId !== id))}
-                                className="ml-2"
-                              >
-                                <Ionicons name="close-circle" size={16} color="#0286FF" />
-                              </TouchableOpacity>
-                            </View>
-                          );
-                        })}
-                      </View>
-                    )}
-                  </View>
+                {/* Provider Info */}
+                <View className="bg-gray-50 p-4 rounded-xl">
+                  <Text className="font-JakartaBold text-gray-900 mb-2">Provider</Text>
+                  <Text className="font-JakartaMedium text-gray-600">James Smith</Text>
+                </View>
+
+                {/* Contributors Section */}
+                <View className="mt-6">
+                  <Text className="font-JakartaBold text-gray-900 mb-3">Care Plan Contributors</Text>
+                  <TouchableOpacity 
+                    onPress={() => setShowContributorsDropdown(!showContributorsDropdown)}
+                    className="bg-white border border-gray-200 rounded-xl p-4"
+                  >
+                    <View className="flex-row justify-between items-center">
+                      <Text className="text-gray-600 font-JakartaMedium">
+                        {selectedContributors.length > 0 
+                          ? `${selectedContributors.length} contributors selected`
+                          : 'Select contributors'}
+                      </Text>
+                      <Ionicons name={showContributorsDropdown ? "chevron-up" : "chevron-down"} size={20} color="#666" />
+                    </View>
+                  </TouchableOpacity>
+                  
+                  {showContributorsDropdown && (
+                    <View className="bg-white border border-gray-200 rounded-xl mt-2 overflow-hidden">
+                      {contributorOptions.map((contributor) => (
+                        <TouchableOpacity
+                          key={contributor.id}
+                          className="p-4 border-b border-gray-100 flex-row justify-between items-center"
+                          onPress={() => {
+                            setSelectedContributors(prev => {
+                              if (prev.includes(contributor.id)) {
+                                return prev.filter(id => id !== contributor.id);
+                              }
+                              return [...prev, contributor.id];
+                            });
+                          }}
+                        >
+                          <Text className={`font-JakartaMedium ${
+                            selectedContributors.includes(contributor.id) 
+                              ? 'text-primary-600' 
+                              : 'text-gray-600'
+                          }`}>
+                            {contributor.name}
+                          </Text>
+                          {selectedContributors.includes(contributor.id) && (
+                            <Ionicons name="checkmark-circle" size={20} color="#0286FF" />
+                          )}
+                        </TouchableOpacity>
+                      ))}
+                    </View>
+                  )}
+
+                  {selectedContributors.length > 0 && (
+                    <View className="mt-3 flex-row flex-wrap gap-2">
+                      {selectedContributors.map(id => {
+                        const contributor = contributorOptions.find(c => c.id === id);
+                        return (
+                          <View key={id} className="bg-primary-50 rounded-full px-4 py-2 flex-row items-center">
+                            <Text className="text-primary-600 font-JakartaMedium">{contributor?.name}</Text>
+                            <TouchableOpacity 
+                              onPress={() => setSelectedContributors(prev => prev.filter(cId => cId !== id))}
+                              className="ml-2"
+                            >
+                              <Ionicons name="close-circle" size={16} color="#0286FF" />
+                            </TouchableOpacity>
+                          </View>
+                        );
+                      })}
+                    </View>
+                  )}
                 </View>
               </View>
             </View>
@@ -191,106 +190,83 @@ const CarePlans = () => {
         return (
           <View className="p-4">
             <Text className="text-2xl font-JakartaBold mb-6">Preview</Text>
-            
-            <PreviewSection 
-              title="Where am I now?"
-              content="An actual response goes here"
-            />
-            
-            <PreviewSection 
-              title="Where do I want to get?"
-              content="An actual response goes here"
-            />
-            
-            <PreviewSection 
-              title="How do I get there?"
-              content="An actual response goes here"
-            />
-            
-            <PreviewSection 
-              title="My Strengths"
-              content="An actual response goes here"
-            />
-            
-            <PreviewSection 
-              title="Positive thoughts"
-              content="An actual response goes here"
-            />
-            
-            <PreviewSection 
-              title="Comments"
-              content="An actual response goes here"
-            />
-            
-            <PreviewSection 
-              title="How can I tell how I am doing?"
-              content="An actual response goes here"
-            />
+            {['Where am I now?', 'Where do I want to get?', 'How do I get there?', 
+              'My Strengths', 'Positive thoughts', 'Comments', 'How can I tell how I am doing?'].map((title) => (
+              <PreviewSection 
+                key={title}
+                title={title}
+                content="Content will appear here based on your input"
+              />
+            ))}
           </View>
         );
     }
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
-         <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-      {/* Header with Back Button and Progress Bar */}
-      <View className="p-4">
-        <TouchableOpacity className="flex-row items-center justify-center rounded-xl w-[30%] p-2 border border-neutral-200" onPress={() => router.back()}>
-          <Text className="ml-2 text-lg font-JakartaMedium">Back</Text>
-        </TouchableOpacity>
-        
-        <View className="mt-4">
-          <View className="flex-row items-center">
-            <Text className="text-lg font-JakartaMedium">Careplans</Text>
-            <Ionicons name="chevron-forward" size={20} color="#666" />
-            <Text className="text-lg font-JakartaBold">Oral Care</Text>
-          </View>
+    <SafeAreaView className="flex-1 bg-gray-50">
+      <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 100}} showsVerticalScrollIndicator={false}>
+        {/* Header */}
+        <View className="p-4 bg-white border-b border-gray-100">
+          <TouchableOpacity 
+            className="flex-row items-center bg-gray-50 self-start px-4 py-2 rounded-xl"
+            onPress={() => router.back()}
+          >
+            <Ionicons name="arrow-back" size={20} color="#666" />
+            <Text className="ml-2 font-JakartaMedium text-gray-700">Back</Text>
+          </TouchableOpacity>
           
-          <View className="h-1 bg-gray-200 rounded-full mt-4">
-            <View 
-              className="h-1 bg-primary-500 rounded-full"
-              style={{ width: `${(currentStep / totalSteps) * 100}%` }}
-            />
+          {/* Progress */}
+          <View className="mt-4">
+            <View className="flex-row items-center mb-3">
+              <Text className="text-gray-600 font-JakartaMedium">Step {currentStep} of {totalSteps}</Text>
+              <Text className="mx-2 text-gray-400">•</Text>
+              <Text className="text-primary-600 font-JakartaMedium">
+                {currentStep === 1 ? 'Basic Information' : 'Preview'}
+              </Text>
+            </View>
+            
+            <View className="h-1 bg-gray-100 rounded-full">
+              <View 
+                className="h-1 bg-primary-500 rounded-full"
+                style={{ width: `${(currentStep / totalSteps) * 100}%` }}
+              />
+            </View>
           </View>
         </View>
-      </View>
 
-     
         {renderContent()}
-     
 
-        <View className="p-4">
-  <View className="flex-row justify-between">
-    {currentStep > 1 && (
-      <TouchableOpacity 
-        className="px-6 py-3 bg-gray-100 rounded-lg"
-        onPress={() => setCurrentStep(Math.max(1, currentStep - 1))}
-      >
-        <Text className="font-JakartaMedium">Previous</Text>
-      </TouchableOpacity>
-    )}
-    <TouchableOpacity 
-      className="px-6 py-3 bg-primary-500 rounded-lg"
-      onPress={() => {
-        if (currentStep === totalSteps) {
-          // Handle form submission
-          console.log('Form submitted');
-        } else {
-          setCurrentStep(Math.min(totalSteps, currentStep + 1));
-        }
-      }}
-    >
-      <Text className="font-JakartaMedium text-white">
-        {currentStep === totalSteps ? 'Submit' : 'Next'}
-      </Text>
-    </TouchableOpacity>
-  </View>
-</View>
+        {/* Navigation Buttons */}
+        <View className="p-4 ">
+          <View className="flex-row items-center justify-between">
+            {currentStep > 1 && (
+              <TouchableOpacity 
+                className="px-3 py-3 rounded-xl flex mr-2 items-center"
+                onPress={() => setCurrentStep(Math.max(1, currentStep - 1))}
+              >
+                <Text className="font-JakartaMedium text-gray-700">Previous</Text>
+              </TouchableOpacity>
+            )}
+            <TouchableOpacity 
+              className="px-3 py-3 bg-primary-500 rounded-xl flex items-center ml-2"
+              onPress={() => {
+                if (currentStep === totalSteps) {
+                  console.log('Form submitted');
+                } else {
+                  setCurrentStep(Math.min(totalSteps, currentStep + 1));
+                }
+              }}
+            >
+              <Text className="font-JakartaMedium text-white">
+                {currentStep === totalSteps ? 'Submit' : 'Continue'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
 
-     </ScrollView>
-       {/* Bottom Navigation */}
-       <View className="flex-row justify-between p-4 bg-white border-t border-gray-200">
+         {/* Bottom Navigation */}
+         <View className="flex-row absolute bottom-0 w-full justify-between p-4 bg-white border-t border-gray-200">
         <TouchableOpacity 
           className="px-6 border border-indigo-600 rounded-l-xl py-3  mr-1"
           onPress={() => router.push('/(root)/(tabs)/daily-records')}
@@ -308,20 +284,21 @@ const CarePlans = () => {
           </View>
         </TouchableOpacity>
       </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
 
 const InfoRow = ({ label, value }: { label: string; value: string }) => (
   <View className="flex-row justify-between items-center py-2">
-    <Text className="font-JakartaMedium text-gray-600">{label}:</Text>
-    <Text className="font-JakartaBold">{value}</Text>
+    <Text className="font-JakartaMedium text-gray-500">{label}</Text>
+    <Text className="font-JakartaBold text-gray-900">{value}</Text>
   </View>
 );
 
 const PreviewSection = ({ title, content }: { title: string; content: string }) => (
-  <View className="mb-6">
-    <Text className="text-lg font-JakartaBold mb-2">{title}</Text>
+  <View className="mb-6 bg-white p-4 rounded-xl border border-gray-100">
+    <Text className="text-lg font-JakartaBold text-gray-900 mb-2">{title}</Text>
     <Text className="text-gray-600 font-JakartaRegular">{content}</Text>
   </View>
 );

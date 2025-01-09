@@ -67,15 +67,15 @@ const RecordCard: React.FC<RecordCardProps> = ({ record, onUpdate }) => {
         <View className="flex-row items-center justify-between mb-2">
           <View className="flex-row items-center">
             <View className="h-8 w-8 rounded-full bg-indigo-100 items-center justify-center mr-3">
-              <Text className="text-indigo-600 font-semibold">
+              <Text className="text-indigo-600 font-JakartaSemiBold">
                 {record.createdBy.name.charAt(0)}
               </Text>
             </View>
             <View>
-              <Text className="text-base font-semibold text-gray-900">
+              <Text className="text-base font-JakartaSemiBold text-gray-900">
                 {record.createdBy.name}
               </Text>
-              <Text className="text-sm text-gray-500">
+              <Text className="text-sm font-JakartaLight text-gray-500">
                 {record.createdBy.role}
               </Text>
             </View>
@@ -88,10 +88,10 @@ const RecordCard: React.FC<RecordCardProps> = ({ record, onUpdate }) => {
         {/* Type and Date */}
         <View className="mb-2">
           <View className="flex-row items-center justify-between">
-            <Text className="text-lg font-semibold text-gray-900">
+            <Text className="text-lg font-JakartaSemiBold text-gray-900">
               {record.type}
             </Text>
-            <Text className="text-sm text-gray-500">
+            <Text className="text-sm font-JakartaLight text-gray-500">
               {record.createdOn}
             </Text>
           </View>
@@ -105,7 +105,7 @@ const RecordCard: React.FC<RecordCardProps> = ({ record, onUpdate }) => {
                 key={index}
                 className="bg-indigo-100 px-3 py-1 rounded-full"
               >
-                <Text className="text-indigo-600 text-sm">{tag}</Text>
+                <Text className="text-indigo-600 font-JakartaLight text-sm">{tag}</Text>
               </View>
             ))}
           </View>
@@ -115,13 +115,13 @@ const RecordCard: React.FC<RecordCardProps> = ({ record, onUpdate }) => {
         {record.description && (
           <View>
             <Text 
-              className="text-gray-600" 
+              className="text-gray-600 font-JakartaLight" 
               numberOfLines={isExpanded ? undefined : 1}
             >
               {record.description}
             </Text>
             {!isExpanded && record.description.length > 100 && (
-              <Text className="text-indigo-600 text-sm mt-1">Read more</Text>
+              <Text className="text-indigo-600 font-JakartaLight text-sm mt-1">Read more</Text>
             )}
           </View>
         )}
@@ -129,7 +129,7 @@ const RecordCard: React.FC<RecordCardProps> = ({ record, onUpdate }) => {
         {record.attachments && record.attachments.length > 0 && (
           <View className="flex-row items-center mt-2">
             <Ionicons name="attach-outline" size={20} color="#6B7280" />
-            <Text className="text-sm text-gray-600 ml-2">
+            <Text className="text-sm text-gray-600 font-JakartaLight ml-2">
               {record.attachments.length} attachment{record.attachments.length !== 1 ? 's' : ''}
             </Text>
           </View>
@@ -143,21 +143,21 @@ const RecordCard: React.FC<RecordCardProps> = ({ record, onUpdate }) => {
             className="flex-1 flex-row items-center justify-center py-3"
           >
             <Ionicons name="document-text-outline" size={18} color="#6B7280" />
-            <Text className="text-sm text-gray-600 ml-2">Description</Text>
+            <Text className="text-sm font-JakartaLight text-gray-600 ml-2">Description</Text>
           </TouchableOpacity>
 
           <TouchableOpacity 
             className="flex-1 flex-row items-center justify-center py-3"
           >
             <Ionicons name="attach-outline" size={18} color="#6B7280" />
-            <Text className="text-sm text-gray-600 ml-2">Files</Text>
+            <Text className="text-sm font-JakartaLight text-gray-600 ml-2">Files</Text>
           </TouchableOpacity>
 
           <TouchableOpacity 
             className="flex-1 flex-row items-center justify-center py-3"
           >
             <Ionicons name="time-outline" size={18} color="#6B7280" />
-            <Text className="text-sm text-gray-600 ml-2">History</Text>
+            <Text className="text-sm font-JakartaLight text-gray-600 ml-2">History</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -197,8 +197,6 @@ const FilterModal: React.FC<FilterModalProps> = ({
       option.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [options, searchQuery]);
-  const [isCarePlanVisible, setIsCarePlanVisible] = useState(false);
-
 
   return (
     <Modal
@@ -216,7 +214,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
           <View className="bg-white rounded-xl overflow-hidden">
             {/* Header */}
             <View className="p-4 border-b border-gray-100">
-              <Text className="text-lg font-semibold text-gray-900 mb-3">{title}</Text>
+              <Text className="text-lg font-JakartaSemiBold text-gray-900 mb-3">{title}</Text>
               
               {/* Search Input */}
               <View className="flex-row items-center bg-gray-100 rounded-lg px-3 py-2">
@@ -225,7 +223,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
                   value={searchQuery}
                   onChangeText={setSearchQuery}
                   placeholder={`Search ${title.toLowerCase()}...`}
-                  className="flex-1 ml-2 text-gray-900"
+                  className="flex-1 ml-2 font-JakartaMedium text-gray-900"
                   placeholderTextColor="#6B7280"
                 />
                 {searchQuery !== "" && (
@@ -259,14 +257,14 @@ const FilterModal: React.FC<FilterModalProps> = ({
                        <Ionicons name="checkmark" size={14} color="white" />
                      )}
                    </View>
-                   <Text className="text-gray-700">{option}</Text>
+                   <Text className="text-gray-700 font-JakartaMedium">{option}</Text>
                  </TouchableOpacity>
                 ))}
               </ScrollView>
             ) : (
               <View className="py-8 items-center">
                 <Ionicons name="search-outline" size={24} color="#6B7280" />
-                <Text className="text-gray-500 mt-2">No results found</Text>
+                <Text className="text-gray-500 font-JakartaSemiBold mt-2">No results found</Text>
               </View>
             )}
 
@@ -274,14 +272,14 @@ const FilterModal: React.FC<FilterModalProps> = ({
             {/* Action Buttons */}
             <View className="p-4 flex-row justify-between border-t border-gray-100">
               <View className="flex-row items-center">
-                <Text className="text-gray-600">
+                <Text className="text-gray-600 font-JakartaLight">
                   {selectedItems.length} selected
                 </Text>
                 {selectedItems.length > 0 && (
                   <TouchableOpacity 
                     className="ml-2 px-2 py-1 rounded bg-gray-100"
                     onPress={onClear}> 
-                    <Text className="text-gray-600">Clear</Text>
+                    <Text className="text-gray-600 font-JakartaLight">Clear</Text>
                   </TouchableOpacity>
                 )}
               </View>
@@ -290,13 +288,13 @@ const FilterModal: React.FC<FilterModalProps> = ({
                   className="px-4 py-2 rounded-lg bg-gray-100"
                   onPress={onClose}
                 >
-                  <Text className="text-gray-600">Cancel</Text>
+                  <Text className="text-gray-600 font-JakartaLight">Cancel</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
                   className="px-4 py-2 rounded-lg bg-indigo-600"
                   onPress={onClose}
                 >
-                  <Text className="text-white">Apply</Text>
+                  <Text className="text-white font-JakartaLight">Apply</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -325,7 +323,7 @@ const EditRecordModal = ({ visible, onClose, record, onSave }: { visible: boolea
         <View className="mt-20 mx-4 bg-white rounded-xl overflow-hidden flex-1 mb-4">
           {/* Header */}
           <View className="p-4 border-b border-gray-100 flex-row justify-between items-center">
-            <Text className="text-xl font-semibold text-gray-900">Edit Record</Text>
+            <Text className="text-xl font-JakartaSemiBold text-gray-900">Edit Record</Text>
             <TouchableOpacity onPress={onClose}>
               <Ionicons name="close" size={24} color="#6B7280" />
             </TouchableOpacity>
@@ -335,11 +333,11 @@ const EditRecordModal = ({ visible, onClose, record, onSave }: { visible: boolea
           <ScrollView className="p-4" showsVerticalScrollIndicator={false}>
             {/* Type */}
             <View className="mb-4">
-              <Text className="text-sm font-medium text-gray-700 mb-1">Type</Text>
+              <Text className="text-sm font-JakartaMedium text-gray-700 mb-1">Type</Text>
               <TextInput
                 value={editedRecord.type}
                 onChangeText={(text) => setEditedRecord({...editedRecord, type: text})}
-                className="border border-gray-200 rounded-lg px-3 py-2 text-gray-900"
+                className="border border-gray-200 rounded-lg font-JakartaMedium px-3 py-2 text-gray-900"
               />
             </View>
 
@@ -351,7 +349,7 @@ const EditRecordModal = ({ visible, onClose, record, onSave }: { visible: boolea
                 onChangeText={(text) => setEditedRecord({...editedRecord, description: text})}
                 multiline
                 numberOfLines={4}
-                className="border border-gray-200 rounded-lg px-3 py-2 text-gray-900"
+                className="border border-gray-200 font-JakartaMedium rounded-lg px-3 py-2 text-gray-900"
                 textAlignVertical="top"
               />
             </View>
@@ -365,13 +363,13 @@ const EditRecordModal = ({ visible, onClose, record, onSave }: { visible: boolea
                   const tagsArray = text.split(',').map(tag => tag.trim()).filter(tag => tag);
                   setEditedRecord({...editedRecord, tags: tagsArray});
                 }}
-                className="border border-gray-200 rounded-lg px-3 py-2 text-gray-900"
+                className="border border-gray-200 font-JakartaMedium rounded-lg px-3 py-2 text-gray-900"
               />
             </View>
 
             {/* Attachments List */}
             <View className="mb-4">
-              <Text className="text-sm font-medium text-gray-700 mb-1">Attachments</Text>
+              <Text className="text-sm font-JakartaMedium text-gray-700 mb-1">Attachments</Text>
               {editedRecord.attachments?.map((attachment: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined, index: React.Key | null | undefined) => (
                 <View key={index} className="flex-row items-center mb-2">
                   <Ionicons name="document-outline" size={20} color="#6B7280" />
@@ -398,13 +396,13 @@ const EditRecordModal = ({ visible, onClose, record, onSave }: { visible: boolea
               className="px-4 py-2 rounded-lg bg-gray-100"
               onPress={onClose}
             >
-              <Text className="text-gray-600">Cancel</Text>
+              <Text className="text-gray-600 font-JakartaLight">Cancel</Text>
             </TouchableOpacity>
             <TouchableOpacity 
               className="px-4 py-2 rounded-lg bg-indigo-600"
               onPress={handleSave}
             >
-              <Text className="text-white">Save Changes</Text>
+              <Text className="text-white font-JakartaMedium">Save Changes</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -481,7 +479,7 @@ const DailyRecords: React.FC = () => {
       {/* Header */}
       <View className="px-4 py-3 bg-white border-b border-gray-100">
         <View className="flex-row items-center justify-between mb-3">
-          <Text className="text-2xl font-bold text-gray-900">
+          <Text className="text-2xl font-JakartaBold text-gray-900">
             Daily Records
           </Text>
           <TouchableOpacity
@@ -489,7 +487,7 @@ const DailyRecords: React.FC = () => {
             onPress={() => setShowAddRecord(true)}
           >
             <Ionicons name="add" size={20} color="white" />
-            <Text className="text-white font-medium ml-1">
+            <Text className="text-white font-JakartaMedium ml-1">
               Add Record
             </Text>
           </TouchableOpacity>
@@ -510,7 +508,7 @@ const DailyRecords: React.FC = () => {
           <Ionicons name="search" size={20} color="#6B7280" />
           <TextInput
             placeholder="Search in daily records..."
-            className="flex-1 ml-2 text-gray-900"
+            className="flex-1 font-JakartaMedium ml-2 text-gray-900"
             placeholderTextColor="#6B7280"
             value={searchQuery} 
             onChangeText={setSearchQuery}
@@ -531,7 +529,7 @@ const DailyRecords: React.FC = () => {
               color={selectedAuthors.length > 0 ? '#4F46E5' : '#6B7280'} 
             />
             <Text className={`ml-2 ${
-              selectedAuthors.length > 0 ? 'text-indigo-600' : 'text-gray-600'
+              selectedAuthors.length > 0 ? 'text-indigo-600 font-JakartaMedium' : 'text-gray-600 font-JakartaMedium'
             }`}>
               {selectedAuthors.length > 0 
                 ? `${selectedAuthors.length} selected`
@@ -552,7 +550,7 @@ const DailyRecords: React.FC = () => {
               color={selectedTypes.length > 0 ? '#4F46E5' : '#6B7280'} 
             />
             <Text className={`ml-2 ${
-              selectedTypes.length > 0 ? 'text-indigo-600' : 'text-gray-600'
+              selectedTypes.length > 0 ? 'text-indigo-600 font-JakartaMedium' : 'text-gray-600 font-JakartaMedium'
             }`}>
               {selectedTypes.length > 0 
                 ? `${selectedTypes.length} selected`
@@ -585,7 +583,7 @@ const DailyRecords: React.FC = () => {
           <View className="mt-auto bg-white rounded-t-xl">
             <View className="p-4 border-b border-gray-100">
               <View className="flex-row justify-between items-center mb-2">
-                <Text className="text-xl font-semibold">Select Date Range</Text>
+                <Text className="text-xl font-JakartaSemiBold">Select Date Range</Text>
                 <TouchableOpacity onPress={() => setShowRangeSelector(false)}>
                   <Ionicons name="close" size={24} color="#6B7280" />
                 </TouchableOpacity>
@@ -610,7 +608,7 @@ const DailyRecords: React.FC = () => {
                       <Ionicons name="checkmark" size={14} color="white" />
                     )}
                   </View>
-                  <Text className="text-gray-900">{range.label}</Text>
+                  <Text className="text-gray-900 font-JakartaMedium">{range.label}</Text>
                 </TouchableOpacity>
               ))}
             </ScrollView>

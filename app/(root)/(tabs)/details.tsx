@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import CarePlanShow from '@/components/CarePlanShow';
 
 export default function ServiceUserProfile() {
@@ -21,6 +21,7 @@ export default function ServiceUserProfile() {
     allergies: 'All allergies should go here.',
   };
   const [isCarePlanVisible, setIsCarePlanVisible] = useState(false);
+  const { patientName } = useLocalSearchParams()
   
 
   return (
@@ -35,10 +36,10 @@ export default function ServiceUserProfile() {
             >
               <Ionicons name="arrow-back" size={24} color="#4F46E5" />
             </TouchableOpacity>
-            <Text className="text-xl font-bold ml-2">Profile Details</Text>
+            <Text className="text-xl font-JakartaBold ml-2">Profile Details</Text>
           </View>
           <TouchableOpacity className="p-2">
-            <Ionicons name="create-outline" size={24} color="#4F46E5" />
+            {/*<Ionicons name="create-outline" size={24} color="#4F46E5" />*/}
           </TouchableOpacity>
         </View>
       </View>
@@ -52,18 +53,18 @@ export default function ServiceUserProfile() {
         <View className="bg-white px-4 py-6 mb-3">
           <View className="flex-row items-center">
             <View className="w-20 h-20 rounded-full bg-indigo-100 items-center justify-center">
-              <Text className="text-2xl font-bold text-indigo-600">
+              <Text className="text-2xl font-JakartaBold text-indigo-600">
                 {userData.name.split(' ').map(n => n[0]).join('')}
               </Text>
             </View>
             <View className="ml-4 flex-1">
-              <Text className="text-2xl font-bold text-gray-900">{userData.name}</Text>
+              <Text className="text-2xl font-JakartaBold text-gray-900">{patientName}</Text>
               <View className="flex-row mt-2">
                 <View className="bg-indigo-100 px-3 py-1 rounded-full mr-2">
-                  <Text className="text-indigo-600 font-medium">{userData.age} years</Text>
+                  <Text className="text-indigo-600 font-JakartaMedium">{userData.age} years</Text>
                 </View>
                 <View className="bg-indigo-100 px-3 py-1 rounded-full">
-                  <Text className="text-indigo-600 font-medium">{userData.gender}</Text>
+                  <Text className="text-indigo-600 font-JakartaMedium">{userData.gender}</Text>
                 </View>
               </View>
             </View>
@@ -73,7 +74,7 @@ export default function ServiceUserProfile() {
         {/* Vitals Card */}
         <View className="mx-4 bg-white rounded-xl shadow-sm overflow-hidden mb-3">
           <View className="px-4 py-3 bg-indigo-50">
-            <Text className="font-bold text-indigo-900">Vital Statistics</Text>
+            <Text className="font-JakartaBold text-indigo-900">Vital Statistics</Text>
           </View>
           <View className="p-4 flex-row justify-between">
             <VitalItem icon="resize" label="Height" value={userData.height} />
@@ -141,8 +142,8 @@ const VitalItem = ({ icon, label, value }: { icon: string; label: string; value:
     <View className="w-10 h-10 bg-indigo-100 rounded-full items-center justify-center mb-2">
       <Ionicons name={icon} size={20} color="#4F46E5" />
     </View>
-    <Text className="text-gray-600 text-sm mb-1">{label}</Text>
-    <Text className="font-bold text-gray-900">{value}</Text>
+    <Text className="text-gray-600 text-sm font-JakartaLight mb-1">{label}</Text>
+    <Text className="font-JakartaBold text-gray-900">{value}</Text>
   </View>
 );
 
@@ -153,9 +154,9 @@ const InfoCard = ({ title, content, icon }: { title: string; content: string; ic
         <View className="w-8 h-8 bg-indigo-100 rounded-full items-center justify-center">
           <Ionicons name={icon} size={18} color="#4F46E5" />
         </View>
-        <Text className="font-bold text-gray-900 ml-3">{title}</Text>
+        <Text className="font-JakartaBold text-gray-900 ml-3">{title}</Text>
       </View>
-      <Text className="text-gray-600">{content}</Text>
+      <Text className="text-gray-600 font-JakartaLight">{content}</Text>
     </View>
   </View>
 );

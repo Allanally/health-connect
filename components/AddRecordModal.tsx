@@ -88,7 +88,7 @@ const AddRecordModal: React.FC<AddRecordModalProps> = ({
         <View className="mt-auto bg-white rounded-t-xl">
           <View className="p-4 border-b border-gray-100">
             <View className="flex-row justify-between items-center mb-4">
-              <Text className="text-xl font-semibold">Select Type</Text>
+              <Text className="text-xl font-JakartaMedium">Select Type</Text>
               <TouchableOpacity onPress={() => setShowTypeSelector(false)}>
                 <Ionicons name="close" size={24} color="#6B7280" />
               </TouchableOpacity>
@@ -99,7 +99,7 @@ const AddRecordModal: React.FC<AddRecordModalProps> = ({
                 value={searchType}
                 onChangeText={setSearchType}
                 placeholder="Search types..."
-                className="flex-1 ml-2"
+                className="flex-1 font-JakartaMedium ml-2"
                 placeholderTextColor="#6B7280"
               />
             </View>
@@ -114,7 +114,7 @@ const AddRecordModal: React.FC<AddRecordModalProps> = ({
                   setShowTypeSelector(false);
                 }}
               >
-                <Text className="text-gray-900">{t}</Text>
+                <Text className="text-gray-900 font-JakartaMedium">{t}</Text>
               </TouchableOpacity>
             ))}
           </ScrollView>
@@ -134,7 +134,7 @@ const AddRecordModal: React.FC<AddRecordModalProps> = ({
       <View className="mt-auto bg-white rounded-t-xl">
         <View className="p-4 border-b border-gray-100">
           <View className="flex-row justify-between items-center mb-4">
-            <Text className="text-xl font-semibold">Select Care Plan</Text>
+            <Text className="text-xl font-JakartaSemiBold">Select Care Plan</Text>
             <TouchableOpacity onPress={() => setShowCarePlanSelector(false)}>
               <Ionicons name="close" size={24} color="#6B7280" />
             </TouchableOpacity>
@@ -145,7 +145,7 @@ const AddRecordModal: React.FC<AddRecordModalProps> = ({
               value={searchCarePlan}
               onChangeText={setSearchCarePlan}
               placeholder="Search care plans..."
-              className="flex-1 ml-2"
+              className="flex-1 font-JakartaMedium ml-2"
               placeholderTextColor="#6B7280"
             />
           </View>
@@ -185,34 +185,34 @@ const AddRecordModal: React.FC<AddRecordModalProps> = ({
         <View className="flex-1">
           {/* Header */}
           <View className="px-4 py-3 border-b border-gray-100 flex-row justify-between items-center">
-            <Text className="text-xl font-semibold">Add Record</Text>
+            <Text className="text-xl font-JakartaSemiBold">Add Record</Text>
             <TouchableOpacity onPress={onClose}>
               <Ionicons name="close" size={24} color="#6B7280" />
             </TouchableOpacity>
           </View>
 
-          <ScrollView className="flex-1 p-4" contentContainerStyle={{ paddingBottom: 100}}>
+          <ScrollView className="flex-1 p-4" showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100}}>
             {/* User Info */}
             <View className="flex-row items-center mb-6">
               <View className="h-12 w-12 rounded-full bg-indigo-100 items-center justify-center">
-                <Text className="text-indigo-600 text-lg font-semibold">
+                <Text className="text-indigo-600 text-lg font-JakartaSemiBold">
                   {userName.charAt(0)}
                 </Text>
               </View>
               <View className="ml-3">
-                <Text className="text-lg font-semibold">{userName}</Text>
-                <Text className="text-gray-500">{userRole}</Text>
+                <Text className="text-lg font-JakartaSemiBold">{userName}</Text>
+                <Text className="text-gray-500 font-JakartaLight">{userRole}</Text>
               </View>
             </View>
 
             {/* Type Selector */}
             <View className="mb-6">
-              <Text className="text-sm font-medium text-gray-700 mb-2">Type *</Text>
+              <Text className="text-sm font-JakartaMedium text-gray-700 mb-2">Type *</Text>
               <TouchableOpacity
                 onPress={() => setShowTypeSelector(true)}
                 className="border border-gray-200 rounded-2xl px-4 py-3 flex-row justify-between items-center"
               >
-                <Text className={type ? "text-gray-900" : "text-gray-400"}>
+                <Text className={type ? "text-gray-900 font-JakartaMedium" : "text-gray-400 font-JakartaMedium"}>
                   {type || "Select type"}
                 </Text>
                 <Ionicons name="chevron-down" size={20} color="#6B7280" />
@@ -221,26 +221,26 @@ const AddRecordModal: React.FC<AddRecordModalProps> = ({
 
             {/* Description */}
             <View className="mb-6">
-              <Text className="text-sm font-medium text-gray-700 mb-2">Description *</Text>
+              <Text className="text-sm font-JakartaMedium text-gray-700 mb-2">Description *</Text>
               <TextInput
                 value={description}
                 onChangeText={setDescription}
                 placeholder="Enter description..."
                 multiline
                 numberOfLines={6}
-                className="border border-gray-200 rounded-2xl p-3 text-gray-900"
+                className="border border-gray-200  font-JakartaMedium rounded-2xl p-3 text-gray-900"
                 textAlignVertical="top"
               />
             </View>
 
             {/* Care Plan Selector */}
             <View className="mb-6">
-              <Text className="text-sm font-medium text-gray-700 mb-2">Linked Care Plan</Text>
+              <Text className="text-sm font-JakartaMedium text-gray-700 mb-2">Linked Care Plan</Text>
               <TouchableOpacity
                 onPress={() => setShowCarePlanSelector(true)}
                 className="border border-gray-200 rounded-2xl px-4 py-3 flex-row justify-between items-center"
               >
-                <Text className={carePlan ? "text-gray-900" : "text-gray-400"}>
+                <Text className={carePlan ? "text-gray-900 font-JakartaMedium" : "text-gray-400 font-JakartaMedium"}>
                   {carePlan || selectedCarePlan || "Select care plan"}
                 </Text>
                 <Ionicons name="chevron-down" size={20} color="#6B7280" />
@@ -249,10 +249,10 @@ const AddRecordModal: React.FC<AddRecordModalProps> = ({
 
             {/* Attachment Section */}
             <View>
-              <Text className="text-sm font-medium text-gray-700 mb-2">Attachments</Text>
+              <Text className="text-sm font-JakartaMedium text-gray-700 mb-2">Attachments</Text>
               <TouchableOpacity className="border-2 border-dashed border-gray-200 rounded-2xl px-4 py-20 items-center">
                 <Ionicons name="cloud-upload-outline" size={24} color="#6B7280" />
-                <Text className="text-gray-500 mt-2">Tap to upload files</Text>
+                <Text className="text-gray-500 font-JakartaMedium mt-2">Tap to upload files</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -263,7 +263,7 @@ const AddRecordModal: React.FC<AddRecordModalProps> = ({
               onPress={handleSubmit}
               className="bg-indigo-600 py-3 w-[60%] rounded-3xl items-center"
             >
-              <Text className="text-white font-semibold text-lg">Submit</Text>
+              <Text className="text-white font-JakartaMedium text-lg">Submit</Text>
             </TouchableOpacity>
           </View>
         </View>

@@ -93,14 +93,14 @@ const CarePlanHistoryScreen = () => {
               <Ionicons name="document-text" size={16} color="#4F46E5" />
             </View>
             <View>
-              <Text className="text-gray-900 font-medium">{item.name}</Text>
-              <Text className="text-sm text-gray-500">{item.updatedBy} • {item.role}</Text>
+              <Text className="text-gray-900 font-JakartaMedium">{item.name}</Text>
+              <Text className="text-sm font-JakartaLight text-gray-500">{item.updatedBy} • {item.role}</Text>
             </View>
           </View>
         </View>
         
         <View className="flex-row w-full items-center">
-          <Text className="text-sm ml-10 text-gray-500">{item.updatedOn}</Text>
+          <Text className="text-sm ml-10 font-JakartaLight text-gray-500">{item.updatedOn}</Text>
         </View>
       </View>
       <TouchableOpacity className='mr-4'>
@@ -119,14 +119,14 @@ const CarePlanHistoryScreen = () => {
           <Ionicons name="medical" size={20} color="#4F46E5" />
         </View>
         <View className="flex-1">
-          <Text className="text-gray-900 text-lg font-semibold">{item.name}</Text>
+          <Text className="text-gray-900 text-lg font-JakartaSemiBold">{item.name}</Text>
           <View className="flex-row items-center mt-1">
           <View 
               className={`rounded-full px-3 py-1 ${
                 item.status === 'Submitted' ? 'bg-green-900' : 'bg-red-900'
               }`}
             >
-              <Text className={`text-sm ${
+              <Text className={`text-sm font-JakartaLight ${
                 item.status === 'Submitted' ? 'text-white' : 'text-white'
               }`}>
                 {item.status}
@@ -143,19 +143,19 @@ const CarePlanHistoryScreen = () => {
             <Ionicons name="person" size={16} color="#4F46E5" />
           </View>
           <View className="ml-2">
-            <Text className="text-gray-900">{item.updatedBy}</Text>
-            <Text className="text-indigo-600 text-sm">{item.role}</Text>
+            <Text className="text-gray-900 font-JakartaLight">{item.updatedBy}</Text>
+            <Text className="text-indigo-600 font-JakartaLight text-sm">{item.role}</Text>
           </View>
         </View>
         
         <View className="flex-row justify-between mt-2">
           <View>
-            <Text className="text-gray-500 text-sm">Updated on</Text>
-            <Text className="text-gray-700">{item.updatedOn}</Text>
+            <Text className="text-gray-500 font-JakartaLight text-sm">Updated on</Text>
+            <Text className="text-gray-700 font-JakartaLight">{item.updatedOn}</Text>
           </View>
           <View>
-            <Text className="text-gray-500 text-sm">Last reviewed</Text>
-            <Text className="text-gray-700">{item.lastReviewedOn}</Text>
+            <Text className="text-gray-500 font-JakartaLight text-sm">Last reviewed</Text>
+            <Text className="text-gray-700 font-JakartaLight">{item.lastReviewedOn}</Text>
           </View>
         </View>
       </View>
@@ -165,7 +165,7 @@ const CarePlanHistoryScreen = () => {
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
       <View className="px-4 py-3">
-        <Text className="text-2xl font-bold text-gray-900 mb-4">History</Text>
+        <Text className="text-2xl font-JakartaBold text-gray-900 mb-4">History</Text>
         
         <View className="bg-white border border-indigo-100 rounded-lg mb-4">
           <View className="flex-row items-center px-3 py-2">
@@ -175,7 +175,7 @@ const CarePlanHistoryScreen = () => {
               placeholderTextColor="#6B7280"
               value={searchQuery}
               onChangeText={setSearchQuery}
-              className="flex-1 px-2 text-gray-900"
+              className="flex-1 px-2 font-JarkataMedium text-gray-900"
             />
             {searchQuery !== '' && (
               <TouchableOpacity onPress={() => setSearchQuery('')}>
@@ -192,7 +192,7 @@ const CarePlanHistoryScreen = () => {
               activeTab === 'submitted' ? 'opacity-100' : 'opacity-50'
             }`}
           >
-            <Text className="text-gray-900 font-medium mr-2">SUBMITTED</Text>
+            <Text className="text-gray-900 font-JakartaMedium mr-2">SUBMITTED</Text>
             <View className="bg-indigo-600 rounded-full px-2 py-0.5">
               <Text className="text-white">5</Text>
             </View>
@@ -204,7 +204,7 @@ const CarePlanHistoryScreen = () => {
               activeTab === 'archived' ? 'opacity-100' : 'opacity-50'
             }`}
           >
-            <Text className="text-gray-900 font-medium mr-2">ARCHIVED</Text>
+            <Text className="text-gray-900 font-JakartaMedium mr-2">ARCHIVED</Text>
             <View className="bg-indigo-600 rounded-full px-2 py-0.5">
               <Text className="text-white">1</Text>
             </View>
@@ -233,7 +233,7 @@ const CarePlanHistoryScreen = () => {
           onPress={() => router.push('/(root)/(tabs)/daily-records')}
         >
           <View className="flex-row items-center justify-center">
-            <Text className=" font-medium ml-2">DR</Text>
+            <Text className=" font-JakartaMedium ml-2">DR</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity 
@@ -241,7 +241,7 @@ const CarePlanHistoryScreen = () => {
           onPress={() => setIsCarePlanVisible(true)}
         >
           <View className="flex-row items-center justify-center">
-            <Text className=" font-medium ml-2">CP</Text>
+            <Text className=" font-JakartaMedium ml-2">CP</Text>
           </View>
         </TouchableOpacity>
       </View>

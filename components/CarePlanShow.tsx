@@ -1,10 +1,11 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import ReactNativeModal from "react-native-modal";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import CreateCarePlanModal from "./CreateCarePlanModal";
 
 interface CarePlanShowProps {
   visible: boolean;
@@ -37,14 +38,15 @@ const CARE_PLANS = [
 
 const CarePlanShow: React.FC<CarePlanShowProps> = ({ visible, onClose }) => {
   const [modalContent, setModalContent] = useState<'default' | 'edit' | 'create'>('default');
+  const [isCreateModalVisible, setCreateModalVisible] = useState(false);
 
   const handleEditClick = () => {
     setModalContent('edit');
   };
 
   const handleCreateClick = () => {
-    setModalContent('create');
-    onClose();
+    setCreateModalVisible(true);
+    onClose(); // Close the main modal
   };
 
   const handleViewClick = () => {
@@ -56,67 +58,11 @@ const CarePlanShow: React.FC<CarePlanShowProps> = ({ visible, onClose }) => {
     setModalContent('default');
   };
 
-  const CARE_PLAN_CATEGORIES = [
-    { id: 1, name: 'Personal care', status: 'drafted' },
-    { id: 2, name: 'COVID', status: 'needs_revision' },
-    { id: 3, name: 'Oral care', status: 'drafted' },
-    { id: 4, name: 'Diabetes passport', status: 'submitted' },
-    { id: 5, name: 'Eating and drinking', status: 'drafted' },
-    { id: 6, name: 'Eye care', status: 'submitted' },
-    { id: 7, name: 'Finance', status: 'drafted' },
-    { id: 8, name: 'Physical', status: 'needs_revision' },
-    { id: 9, name: 'Self harm', status: 'submitted' },
-    { id: 10, name: 'Sleep', status: 'drafted' }
-  ];
-  
-  const CreateBottomSheet = () => (
-    <ScrollView className="max-h-screen" contentContainerStyle={{ alignItems: "center"}} showsVerticalScrollIndicator={false}>
-          <View className="flex-1 ">
-      <View className="flex-row justify-between items-center px-4 py-3">
-        <View className="flex-row items-center space-x-2">
-          <TouchableOpacity onPress={() => setModalContent('default')}>
-            <Ionicons name="arrow-back" size={24} />
-          </TouchableOpacity>
-          <Text className="text-xl font-JakartaBold ">CARE PLANS</Text>
-        </View>
-        <TouchableOpacity onPress={() => setModalContent('default')}>
-          <Ionicons name="close" size={24} color="#fff" />
-        </TouchableOpacity>
-      </View>
-
-      <ScrollView 
-        className="flex-1 px-4 py-2" 
-        showsVerticalScrollIndicator={false}
-      >
-        <View className="flex-row flex-wrap justify-between">
-          {CARE_PLAN_CATEGORIES.map((plan) => (
-            <TouchableOpacity
-              key={plan.id}
-              className={`w-[48%] mb-3 p-4 rounded-lg  border border-l-4 border-neutral-300`}
-              activeOpacity={0.7}
-            >
-              <View className="flex-row justify-between items-center">
-                <Text className="font-JakartaMedium text-indigo-800 flex-1 mr-2" numberOfLines={2}>
-                  {plan.name}
-                </Text>
-                <Ionicons 
-                  name='add-circle' 
-                  size={16} 
-                  color="gray"
-                />
-              </View>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </ScrollView>
-    </View>
-    </ScrollView>
-  );
   const renderContent = () => {
     if (modalContent === 'edit') {
       return (
         <View className='bg-white px-7 py-9 rounded-2xl'>
-          <View className="flex-col ">
+          <View className="flex-col">
             <Text className='text-lg font-JakartaMedium mb-2'>Edit Care Plan</Text>
             <TouchableOpacity 
               onPress={handleBackClick} 
@@ -187,21 +133,24 @@ const CarePlanShow: React.FC<CarePlanShowProps> = ({ visible, onClose }) => {
 
   return (
     <>
-    <ReactNativeModal 
-      isVisible={visible && modalContent !== 'create'}
-      onBackdropPress={onClose}
-      style={{ margin: 0, justifyContent: 'center', padding: 20 }}
-      animationIn="fadeIn"
-      animationOut="fadeOut"
-      useNativeDriver
-    >
-      <GestureHandlerRootView style={{ flex: 0 }}>
-        {renderContent()}
-      </GestureHandlerRootView>
-    </ReactNativeModal>
+      <ReactNativeModal 
+        isVisible={visible}
+        onBackdropPress={onClose}
+        style={{ margin: 0, justifyContent: 'center', padding: 20 }}
+        animationIn="fadeIn"
+        animationOut="fadeOut"
+        useNativeDriver
+      >
+        <GestureHandlerRootView style={{ flex: 0 }}>
+          {renderContent()}
+        </GestureHandlerRootView>
+      </ReactNativeModal>
 
-    {modalContent === 'create' && <CreateBottomSheet />}
-  </>
+      <CreateCarePlanModal 
+        visible={isCreateModalVisible}
+        onClose={() => setCreateModalVisible(false)}
+      />
+    </>
   );
 };
 

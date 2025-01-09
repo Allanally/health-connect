@@ -111,21 +111,30 @@ export default function ServiceUsersList() {
   const currentItems = filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
+  const handlePush = (name:  any) => {
+    router.push({
+      pathname: '/(root)/(tabs)/details',
+      params: {
+        patientName: name
+      }
+    })
+  }
+
   const UserCard = ({ user }: { user: any }) => (
     <TouchableOpacity 
       className="bg-white rounded-xl shadow-sm mb-3 overflow-hidden border border-gray-100"
-      onPress={() => router.push('/(root)/(tabs)/details')}
+      onPress={() => handlePush(`${user.firstName} ${user.lastName}`)}
     >
       <View className="p-4">
         <View className="flex-row justify-between items-start mb-3">
           <View className="flex-row items-center">
             <View className="w-12 h-12 rounded-full bg-indigo-100 items-center justify-center">
-              <Text className="text-lg font-bold text-indigo-600">
+              <Text className="text-lg font-JakartaBold text-indigo-600">
                 {user.firstName[0]}{user.lastName[0]}
               </Text>
             </View>
             <View className="ml-3">
-              <Text className="text-lg font-bold text-gray-900">
+              <Text className="text-lg font-JakartaBold text-gray-900">
                 {user.firstName} {user.lastName}
               </Text>
               <Text className="text-sm text-gray-500">
@@ -134,32 +143,32 @@ export default function ServiceUsersList() {
             </View>
           </View>
           <View className={`px-3 py-1 rounded-full ${getStatusStyle(user.status)}`}>
-            <Text className="text-sm font-medium">{user.status}</Text>
+            <Text className="text-sm font-JakartaMedium">{user.status}</Text>
           </View>
         </View>
 
         <View className="flex-row flex-wrap gap-y-2">
           <View className="w-1/2 flex-row items-center">
             <Ionicons name="calendar-outline" size={16} color="#6B7280" />
-            <Text className="text-sm text-gray-600 ml-2">
+            <Text className="text-sm font-JakartaLight text-gray-600 ml-2">
               Age: {calculateAge(user.dateOfBirth)}
             </Text>
           </View>
           <View className="w-1/2 flex-row items-center">
             <Ionicons name="person-outline" size={16} color="#6B7280" />
-            <Text className="text-sm text-gray-600 ml-2">
+            <Text className="text-sm font-JakartaLight text-gray-600 ml-2">
               {user.gender}
             </Text>
           </View>
           <View className="w-1/2 flex-row items-center">
             <Ionicons name="business-outline" size={16} color="#6B7280" />
-            <Text className="text-sm text-gray-600 ml-2">
+            <Text className="text-sm font-JakartaLight text-gray-600 ml-2">
               {user.unit}
             </Text>
           </View>
           <View className="w-1/2 flex-row items-center">
             <Ionicons name="enter-outline" size={16} color="#6B7280" />
-            <Text className="text-sm text-gray-600 ml-2">
+            <Text className="text-sm font-JakartaLight text-gray-600 ml-2">
               Admitted: {new Date(user.admissionDate).toLocaleDateString()}
             </Text>
           </View>
@@ -174,9 +183,9 @@ export default function ServiceUsersList() {
       <View className="bg-white px-4 py-3 border-b border-gray-200">
         <View className="flex-row items-center justify-between mb-3">
           <View className="flex-row items-center">
-            <Text className="text-2xl font-bold text-gray-900">Service Users</Text>
+            <Text className="text-2xl font-JakartaBold text-gray-900">Service Users</Text>
             <View className="ml-2 bg-indigo-100 px-3 py-1 rounded-full">
-              <Text className="text-indigo-600 font-medium">{userDataList.length}</Text>
+              <Text className="text-indigo-600 font-JakartaLight">{userDataList.length}</Text>
             </View>
           </View>
           <TouchableOpacity 
@@ -190,7 +199,7 @@ export default function ServiceUsersList() {
         <View className="flex-row items-center bg-gray-100 rounded-lg px-3 py-2">
           <Ionicons name="search" size={20} color="#6B7280" />
           <TextInput
-            className="flex-1 ml-2 text-gray-900"
+            className="flex-1 ml-2 font-JakartaMedium text-gray-900"
             placeholder="Search by name or NHS number"
             value={search}
             onChangeText={setSearch}
@@ -211,7 +220,7 @@ export default function ServiceUsersList() {
                 }`}
                 onPress={() => setSelectedUnit(selectedUnit === unit ? '' : unit)}
               >
-                <Text className={selectedUnit === unit ? 'text-indigo-600' : 'text-gray-600'}>
+                <Text className={selectedUnit === unit ? 'text-indigo-600 font-JakartaMedium' : 'text-gray-600 font-JakartaMedium'}>
                   {unit}
                 </Text>
               </TouchableOpacity>
@@ -226,7 +235,7 @@ export default function ServiceUsersList() {
                 }`}
                 onPress={() => setSelectedStatus(selectedStatus === status ? '' : status)}
               >
-                <Text className={selectedStatus === status ? 'text-indigo-600' : 'text-gray-600'}>
+                <Text className={selectedStatus === status ? 'text-indigo-600 font-JakartaMedium' : 'text-gray-600 font-JakartaMedium'}>
                   {status}
                 </Text>
               </TouchableOpacity>
@@ -254,11 +263,11 @@ export default function ServiceUsersList() {
           >
             <View className="flex-row items-center">
               <Ionicons name="chevron-back" size={24} color="#4F46E5" />
-              <Text className="text-indigo-600 font-medium ml-1">Previous</Text>
+              <Text className="text-indigo-600 font-JakartaLight ml-1">Previous</Text>
             </View>
           </TouchableOpacity>
           
-          <Text className="text-gray-600 font-medium">
+          <Text className="text-gray-600  font-JakartaLight">
             Page {currentPage} of {totalPages}
           </Text>
           
@@ -268,7 +277,7 @@ export default function ServiceUsersList() {
             disabled={currentPage === totalPages}
           >
             <View className="flex-row items-center">
-              <Text className="text-indigo-600 font-medium mr-1">Next</Text>
+              <Text className="text-indigo-600 font-JakartaLight mr-1">Next</Text>
               <Ionicons name="chevron-forward" size={24} color="#4F46E5" />
             </View>
           </TouchableOpacity>
